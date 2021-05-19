@@ -9,18 +9,20 @@ var functionId;
 var user = "${DateTime.now().millisecondsSinceEpoch}@example.com";
 var password = "user@123";
 
-var projectid = '60a48cf2c81ff';
-var endpoint = 'https://dltest08.appwrite.org/v1';
+var projectid = '60793ca4ce59e';
+var endpoint = 'http://localhost/v1';
 var secret =
-    'caabb7a50fa5e3123137997e9e26eca5cc9eb06c29fe64fddaaa85057ae8ceb9d876f5c4071fee64bbaea8d6b69094d89979b05a28d6938a96a5bc25f1af3ca2e2e6dc97ff780af2235b7be0f96d9f6b6c395f9417d92f792f13f16094655de60134a0d3fef18e27317ff1640c7e29c00d572f833faaaa3e5e806fb1a1958c73';
+    '98c3cbd9c8746548e017f58937f0e8c8de0d49e932ac9db38af260cc2d94cd26abf155c26524365046b941404860c8fa23b15547331e4155d5b3ae74619bd97dbed227f717c58bc80bc34f9822c24013ce6585ce2119243a9c95c22e63a95c495d6c8c6f5a7243595a369f60a573c2022689296e3fe99773da1567f538630240';
+// var projectid = '60a48cf2c81ff';
+// var endpoint = 'https://dltest08.appwrite.org/v1';
+// var secret =
+//     'caabb7a50fa5e3123137997e9e26eca5cc9eb06c29fe64fddaaa85057ae8ceb9d876f5c4071fee64bbaea8d6b69094d89979b05a28d6938a96a5bc25f1af3ca2e2e6dc97ff780af2235b7be0f96d9f6b6c395f9417d92f792f13f16094655de60134a0d3fef18e27317ff1640c7e29c00d572f833faaaa3e5e806fb1a1958c73';
 
 Future<void> main() async {
   client
-      .setEndpoint(
-          'https://dltest08.appwrite.org/v1') // Make sure your endpoint is accessible
-      .setProject('60a48cf2c81ff') // Your project ID
-      .setKey(
-          'caabb7a50fa5e3123137997e9e26eca5cc9eb06c29fe64fddaaa85057ae8ceb9d876f5c4071fee64bbaea8d6b69094d89979b05a28d6938a96a5bc25f1af3ca2e2e6dc97ff780af2235b7be0f96d9f6b6c395f9417d92f792f13f16094655de60134a0d3fef18e27317ff1640c7e29c00d572f833faaaa3e5e806fb1a1958c73') // Your appwrite key
+      .setEndpoint(endpoint) // Make sure your endpoint is accessible
+      .setProject(projectid) // Your project ID
+      .setKey(secret) // Your appwrite key
       .setSelfSigned(status: true); //Do not use this in production
 
   //running all apis
