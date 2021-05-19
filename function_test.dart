@@ -25,8 +25,9 @@ Future<void> main() async {
 
   //running all apis
 
-  await createFunctions();
-  await createTagsAndExecute();
+  // await createFunctions();
+  // await createTagsAndExecute();
+  await executeOnly();
   // await deleteFunctions();
 }
 
@@ -109,6 +110,22 @@ Future<void> createTagsAndExecute() async {
       await functions.updateTag(
           functionId: function['\$id'], tag: res.data['\$id']);
       print("tag deployed for ${function['env']}");
+      await functions.createExecution(
+          functionId: function['\$id'],
+          data: "This is custom data for ${function['env']}");
+      print("execution created ${function['env']}");
+    }
+  } on AppwriteException catch (e) {
+    print(e.message);
+  }
+}
+
+Future<void> executeOnly() async {
+  final functions = Functions(client);
+  print('Running execute only Functions API');
+  try {
+    final res = await functions.list();
+    for (final function in res.data['functions']) {
       await functions.createExecution(
           functionId: function['\$id'],
           data: "This is custom data for ${function['env']}");
