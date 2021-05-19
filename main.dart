@@ -6,13 +6,16 @@ var userId;
 var fileId;
 var functionId;
 
+var user = "${DateTime.now().millisecondsSinceEpoch}@example.com";
+var password = "user@123";
+
 Future<void> main() async {
   client
       .setEndpoint(
-          'http://localhost/v1') // Make sure your endpoint is accessible
-      .setProject('60793ca4ce59e') // Your project ID
+          'https://dltest08.appwrite.org/v1') // Make sure your endpoint is accessible
+      .setProject('60a48cf2c81ff') // Your project ID
       .setKey(
-          '98c3cbd9c8746548e017f58937f0e8c8de0d49e932ac9db38af260cc2d94cd26abf155c26524365046b941404860c8fa23b15547331e4155d5b3ae74619bd97dbed227f717c58bc80bc34f9822c24013ce6585ce2119243a9c95c22e63a95c495d6c8c6f5a7243595a369f60a573c2022689296e3fe99773da1567f538630240') // Your appwrite key
+          'caabb7a50fa5e3123137997e9e26eca5cc9eb06c29fe64fddaaa85057ae8ceb9d876f5c4071fee64bbaea8d6b69094d89979b05a28d6938a96a5bc25f1af3ca2e2e6dc97ff780af2235b7be0f96d9f6b6c395f9417d92f792f13f16094655de60134a0d3fef18e27317ff1640c7e29c00d572f833faaaa3e5e806fb1a1958c73') // Your appwrite key
       .setSelfSigned(status: true); //Do not use this in production
 
   //running all apis
@@ -25,8 +28,7 @@ Future<void> main() async {
   await uploadFile();
   await deleteFile();
 
-  await createUser('${DateTime.now().millisecondsSinceEpoch}@example.com',
-      'user@123', 'Some user');
+  await createUser(user, password, 'Some user');
   await listUser();
   await deleteUser();
 
@@ -150,8 +152,11 @@ Future<void> createUser(email, password, name) async {
   final users = Users(client);
   print('Running Create User API');
   try {
-    final response =
-        await users.create(email: email, password: password, name: name);
+    final response = await users.create(
+      email: email,
+      password: password,
+      name: name,
+    );
     userId = response.data['\$id'];
     print(response.data);
   } on AppwriteException catch (e) {
@@ -174,7 +179,7 @@ Future<void> deleteUser() async {
   final users = Users(client);
   print("Running delete user");
   try {
-    await users.deleteUser(userId: userId);
+    await users.delete(userId: userId); // deleteUsers was changed to delete
     print("user deleted");
   } on AppwriteException catch (e) {
     print(e.message);
@@ -186,7 +191,7 @@ Future<void> createFunction() async {
   print('Running Create Function API');
   try {
     final res = await functions.create(
-        name: 'test function', execute: [], env: 'dart-2.10');
+        name: 'test function', execute: [], env: 'dart-2.12');
     print(res.data);
     functionId = res.data['\$id'];
   } on AppwriteException catch (e) {
